@@ -35,6 +35,7 @@ static skyline::utils::Task* after_romfs_task = new skyline::utils::Task{[]() {
     // nn::fs::GetFileSize(&file_size, handle);
     // nn::fs::CloseFile(handle);
 
+
     const size_t poolSize = 0x600000;
     void* socketPool = memalign(0x4000, poolSize);
     nn::socket::Initialize(socketPool, poolSize, 0x20000, 14);
@@ -112,6 +113,7 @@ void skyline_main() {
     skyline::logger::setup_socket_hooks();
 
     // initialize logger
+    nn::fs::MountSdCardForDebug("sd");
     skyline::logger::s_Instance = new skyline::logger::TcpLogger();
     skyline::logger::s_Instance->Log("[skyline_main] Begining initialization.\n");
 
