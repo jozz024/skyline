@@ -2,7 +2,7 @@ name: Upload Release
 
 on:
   push:
-    branches: [ master ]
+    branches: [ totk ]
  
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
     - name: make
       run: make
     - name: Prepare ZIP
-      run: mkdir exefs && cp skyline600.nso exefs/subsdk9 && cp cross.npdm exefs/main.npdm && bsdtar -a -cf skyline.zip exefs
+      run: mkdir exefs && cp skyline600.nso exefs/subsdk9 && cp totk.npdm exefs/main.npdm && bsdtar -a -cf skyline.zip exefs
     - name: Upload build artifact
       uses: actions/upload-artifact@v1
       with:
