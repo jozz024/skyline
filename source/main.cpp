@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-#include "skyline/logger/TcpLogger.hpp"
+#include "skyline/logger/KernelLogger.hpp"
 #include "skyline/utils/ipc.hpp"
 #include "skyline/utils/cpputils.hpp"
 #include "skyline/utils/utils.h"
@@ -50,7 +50,7 @@ Result handleNnFsMountRom(char const* path, void* buffer, unsigned long size) {
     rc = nnFsMountRomImpl(path, buffer, size);
 
     skyline::utils::g_RomMountStr = std::string(path) + ":/";
-
+    nn::fs::MountSdCardForDebug("sd");
     // Some games such as Persona 5 Royal call this method multiple times, so we have to ensure we only initialize the queue once
     g_MountRomInit.call_once([]() {
         // start task queue
@@ -105,11 +105,10 @@ void skyline_main() {
     // init hooking setup
     A64HookInit();
 
-    skyline::logger::setup_socket_hooks();
+    // skyline::logger::setup_socket_hooks();
 
     // initialize logger
-    nn::fs::MountSdCardForDebug("sd");
-    skyline::logger::s_Instance = new skyline::logger::TcpLogger();
+    skyline::logger::s_Instance = new skyline::logger::KernelLogger();
     skyline::logger::s_Instance->Log("[skyline_main] Beginning initialization.\n");
 
     // override exception handler to dump info
