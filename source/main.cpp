@@ -31,8 +31,8 @@ static skyline::utils::Task* after_romfs_task = new skyline::utils::Task{[]() {
 
     skyline::logger::s_Instance->StartThread();
 
-    // Result rc = nn::fs::MountSdCardForDebug("sd");
-    // skyline::logger::s_Instance->LogFormat("[skyline_main] Mounted SD (0x%x)", rc);
+    Result rc = nn::fs::MountSdCardForDebug("sd");
+    skyline::logger::s_Instance->LogFormat("[skyline_main] Mounted SD (0x%x)", rc);
 
     // load plugins
     // Note: Bypassing the singleton-like system because some older games (Final Fantasy 9) seem to have issues with _cxa_guard_acquire which gcc automatically adds when using the static instance
@@ -50,7 +50,7 @@ Result handleNnFsMountRom(char const* path, void* buffer, unsigned long size) {
     rc = nnFsMountRomImpl(path, buffer, size);
 
     skyline::utils::g_RomMountStr = std::string(path) + ":/";
-    nn::fs::MountSdCardForDebug("sd");
+    // nn::fs::MountSdCardForDebug("sd");
     // Some games such as Persona 5 Royal call this method multiple times, so we have to ensure we only initialize the queue once
     g_MountRomInit.call_once([]() {
         // start task queue
