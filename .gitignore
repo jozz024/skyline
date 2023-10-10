@@ -23,3 +23,4 @@ linkerscripts/symstemp.ld
 skyline_patch*/
 scripts/.idea/*
 !exported.txt
+*.npdm
