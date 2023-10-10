@@ -31,8 +31,8 @@ static skyline::utils::Task* after_romfs_task = new skyline::utils::Task{[]() {
 
     skyline::logger::s_Instance->StartThread();
 
-    // Result rc = nn::fs::MountSdCardForDebug("sd");
-    // skyline::logger::s_Instance->LogFormat("[skyline_main] Mounted SD (0x%x)", rc);
+    Result rc = nn::fs::MountSdCardForDebug("sd");
+    skyline::logger::s_Instance->LogFormat("[skyline_main] Mounted SD (0x%x)", rc);
 
     // load plugins
     // Note: Bypassing the singleton-like system because some older games (Final Fantasy 9) seem to have issues with _cxa_guard_acquire which gcc automatically adds when using the static instance
